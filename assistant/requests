@@ -1,0 +1,18 @@
+# Thanks to VS code REST Client!
+###
+
+@url = http://localhost:8000
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTQzNzA0NTY3LCJqdGkiOiIzYjJiMzQ3MDUyNzA0ZmVjOTYzMGMwMGU3MDk1OTBhOSIsInVzZXJfaWQiOjF9.T4TDRVZ5lCIS92YRlpMzVQaSabBWH6yfMhsO-ZW38pE
+
+GET {{url}}/assistant/api
+Authorization: Bearer {{token}}
+
+###
+
+POST {{url}}/assistant/api/token
+Content-Type: application/json
+
+{
+  "username": "julien",
+  "password": "forget"
+}
