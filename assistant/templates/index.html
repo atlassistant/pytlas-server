@@ -9,13 +9,20 @@
       
     </ul>
     <form onsubmit="sendMessage(event)">
+      <input type="text" id="token" />
       <input type="text" id="input" />
+      <button type="submit">send</button>
     </form>
   </div>
   <script type="text/javascript">
     const input = document.getElementById('input');
+    const token = document.getElementById('token');
     const messages = document.getElementById('messages');
     const ws = new WebSocket(`ws://${window.location.host}/ws/assistant/`);
+
+    ws.onclose = () => {
+      alert('You have been disconnected');
+    }
 
     ws.onmessage = (e) => {
       const data = JSON.parse(e.data);
@@ -29,11 +36,20 @@
     function sendMessage(e) {
       e.preventDefault();
 
-      ws.send(JSON.stringify({
-        message: input.value,
-      }));
+      if (token.value) {
+        ws.send(JSON.stringify({
+          type: 'authenticate',
+          token: token.value,
+        }));
 
-      input.value = '';
+        token.value = '';
+      } else {
+        ws.send(JSON.stringify({
+          message: input.value,
+        }));
+
+        input.value = '';
+      }
     }
   </script>
 </body>
