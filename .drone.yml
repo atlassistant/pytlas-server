@@ -1,0 +1,9 @@
+pipeline:
+  deploy:
+    image: appleboy/drone-ssh
+    host: serv.voixdunet.com
+    secrets: [ssh_key]
+    script:
+      - cd /home/docker/pytlas-server
+      - git pull
+      - docker-compose up -d --build
