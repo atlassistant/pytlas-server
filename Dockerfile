@@ -1,5 +1,6 @@
-FROM python:3.6-slim
-COPY . /src
+FROM python:3.6
+COPY requirements.txt /src/
 WORKDIR /src
 RUN pip install -r requirements.txt
-ENTRYPOINT ["gunicorn", "gunicorn pytlas_server.wsgi"]
+COPY . /src/
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0", "pytlas_server.wsgi"]
