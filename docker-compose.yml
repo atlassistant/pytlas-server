@@ -1,0 +1,9 @@
+version: '3'
+services:
+  pytlas:
+    restart: unless-stopped
+    build: .
+    environment:
+      - "DJANGO_DEBUG=''"
+    ports:
+      - 5000:5000
