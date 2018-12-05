@@ -8,13 +8,21 @@
     <ul id="messages">
       
     </ul>
+    <form onsubmit="connect(event)">
+      <input type="text" id="username" placeholder="username" />
+      <input type="password" id="password" placeholder="password" />
+      <button type="submit">connect</button>
+    </form>
+
     <form onsubmit="sendMessage(event)">
-      <input type="text" id="token" />
-      <input type="text" id="input" />
+      <input type="text" disabled="disabled" id="token" placeholder="token" />
+      <input type="text" id="input" placeholder="message" />
       <button type="submit">send</button>
     </form>
   </div>
   <script type="text/javascript">
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
     const input = document.getElementById('input');
     const token = document.getElementById('token');
     const messages = document.getElementById('messages');
@@ -33,23 +41,38 @@
       messages.appendChild(li);
     }
 
+    function connect(e) {
+      e.preventDefault();
+
+      fetch('/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username.value,
+          password: password.value,
+        }),
+      }).then(d => d.json())
+        .then(r => {
+          token.value = r.access;
+
+          ws.send(JSON.stringify({
+            type: 'authenticate',
+            token: token.value,
+          }));
+        });
+    }
+
     function sendMessage(e) {
       e.preventDefault();
 
-      if (token.value) {
-        ws.send(JSON.stringify({
-          type: 'authenticate',
-          token: token.value,
-        }));
+      ws.send(JSON.stringify({
+        message: input.value,
+      }));
 
-        token.value = '';
-      } else {
-        ws.send(JSON.stringify({
-          message: input.value,
-        }));
-
-        input.value = '';
-      }
+      input.value = '';
     }
   </script>
 </body>
