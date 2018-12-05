@@ -6,4 +6,4 @@ services:
     environment:
       - "DJANGO_DEBUG=''"
     ports:
-      - 5000:5000
+      - 6005:8000
