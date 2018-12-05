@@ -28,9 +28,12 @@ DEBUG = os.environ.get('DJANGO_DEBUG', True) # Must be set to an empty string to
 
 ALLOWED_HOSTS = [os.environ.get('DJANGO_ALLOWED_HOST', '*')]
 
+CORS_ORIGIN_ALLOW_ALL = True # Since the API is exposed to anyone
+
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'assistant.apps.AssistantConfig',
     'rest_framework',
     'django.contrib.admin',
@@ -56,6 +59,7 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
