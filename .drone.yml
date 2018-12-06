@@ -2,7 +2,8 @@ pipeline:
   publish:
     image: plugins/docker
     tag: latest
-    repo: localhost:5555/pytlas-server
+    repo: registry:5555/pytlas-server
+    insecure: true
   
   # deploy:
   #   image: appleboy/drone-ssh
