@@ -2,15 +2,13 @@ pipeline:
   publish:
     image: plugins/docker
     tag: latest
-    repo: registry:5555/pytlas-server
+    registry: local-registry:5555
+    repo: local-registry:5555/pytlas-server
     insecure: true
   
-  # deploy:
-  #   image: appleboy/drone-ssh
-  #   host: serv.voixdunet.com
-  #   command_timeout: 900
-  #   secrets: [ssh_key]
-  #   script:
-  #     - cd /home/docker/pytlas-server
-  #     - git pull
-  #     - docker-compose up -d --build
+  deploy:
+    image: appleboy/drone-ssh
+    host: serv.voixdunet.com
+    secrets: [ssh_key]
+    script:
+      - cd /home/docker/pytlas-server && docker-compose pull && docker-compose up -d

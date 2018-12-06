@@ -9,4 +9,6 @@ RUN apt-get update \
     && apt-get purge -y --auto-remove gcc libc-dev
 
 COPY . /src/
+
+EXPOSE 8000
 ENTRYPOINT ["daphne", "-b", "0.0.0.0", "pytlas_server.asgi:application"]
