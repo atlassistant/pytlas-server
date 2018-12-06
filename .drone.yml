@@ -1,10 +1,15 @@
 pipeline:
-  deploy:
-    image: appleboy/drone-ssh
-    host: serv.voixdunet.com
-    command_timeout: 900
-    secrets: [ssh_key]
-    script:
-      - cd /home/docker/pytlas-server
-      - git pull
-      - docker-compose up -d --build
+  publish:
+    image: plugins/docker
+    tag: latest
+    repo: localhost:5555/pytlas-server
+  
+  # deploy:
+  #   image: appleboy/drone-ssh
+  #   host: serv.voixdunet.com
+  #   command_timeout: 900
+  #   secrets: [ssh_key]
+  #   script:
+  #     - cd /home/docker/pytlas-server
+  #     - git pull
+  #     - docker-compose up -d --build
