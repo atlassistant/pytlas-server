@@ -10,6 +10,8 @@ RUN apt-get update \
 
 RUN snips-nlu download-all-languages
 
+RUN python manage.py collectstatic --noinput
+
 COPY . /src/
 
 EXPOSE 8000
