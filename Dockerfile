@@ -10,9 +10,9 @@ RUN apt-get update \
 
 RUN snips-nlu download-all-languages
 
-RUN python manage.py collectstatic --noinput
-
 COPY . /src/
+
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 ENTRYPOINT ["daphne", "-b", "0.0.0.0", "pytlas_server.asgi:application"]
