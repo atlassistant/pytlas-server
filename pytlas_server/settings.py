@@ -10,24 +10,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os, logging
+import os
 from datetime import timedelta
-
-logging.basicConfig(level=logging.INFO)
+from pytlas.settings import config, get, getbool, SETTING_DEBUG
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Read the configuration file
+config.read(os.path.join(BASE_DIR, 'pytlas.conf'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET', 's3b73pmubazby4hbh=n5-!s-z)*yijhq&5i6&cdy2o59y%+$0=')
+SECRET_KEY = get('secret', section='web')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', True) # Must be set to an empty string to turn it off
+DEBUG = getbool(SETTING_DEBUG, section='web') # Must be set to an empty string to turn it off
 
-ALLOWED_HOSTS = [os.environ.get('DJANGO_ALLOWED_HOST', '*')]
+ALLOWED_HOSTS = [get('allowed_host', '*', section='web')]
 
 CORS_ORIGIN_ALLOW_ALL = True # Since the API is exposed to anyone
 

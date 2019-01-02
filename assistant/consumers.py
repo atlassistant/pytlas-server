@@ -32,16 +32,48 @@ class AssistantConsumer(WebsocketConsumer):
     self.agent = bridge.get_agent_for_user(self.user)
     self.agent.model = self
 
-  def on_answer(self, text, cards, **meta):
     self.send(text_data=json.dumps({
-      'type': 'message',
-      'message': text,
+      'type': 'ready',
+      'lang': self.agent._interpreter.lang,
+    }))
+
+  def on_answer(self, text, cards, **meta):
+    meta.update({
+      'text': text,
+      'cards': [c.__dict__ for c in cards] if cards else None,
+    })
+
+    self.send(text_data=json.dumps({
+      'type': 'answer',
+      'data': meta,
     }))
 
   def on_ask(self, slot, text, choices, **meta):
+    meta.update({
+      'slot': slot,
+      'text': text,
+    })
+
     self.send(text_data=json.dumps({
-      'type': 'message',
-      'message': text,
+      'type': 'ask',
+      'data': meta,
+    }))
+
+  def on_done(self, require_input):
+    self.send(text_data=json.dumps({
+      'type': 'done',
+      'require_input': require_input,
+    }))
+
+  def on_thinking(self):
+    self.send(text_data=json.dumps({
+      'type': 'thinking',
+    }))
+
+  def on_context(self, name):
+    self.send(text_data=json.dumps({
+      'type': 'context',
+      'name': name,
     }))
 
   def receive(self, text_data):
