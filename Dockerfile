@@ -11,7 +11,7 @@ RUN apt-get update \
 COPY . /src/
 
 RUN python manage.py collectstatic --noinput
-RUN chmod +x /src/entrypoint.sh
+RUN chmod +x /src/entrypoint.sh /src/postinstall.sh
 
 EXPOSE 8000
 ENTRYPOINT ["/src/entrypoint.sh"]
