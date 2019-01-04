@@ -9,4 +9,5 @@ do
     snips-nlu download $lang
 done
 
+echo "Creating super user"
 python manage.py createsuperuser
