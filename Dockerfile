@@ -13,5 +13,5 @@ COPY . /src/
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["daphne", "-b", "0.0.0.0", "pytlas_server.asgi:application"]
