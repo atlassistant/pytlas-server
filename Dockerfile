@@ -8,11 +8,10 @@ RUN apt-get update \
     && pip install -r requirements.txt \
     && apt-get purge -y --auto-remove gcc libc-dev
 
-RUN snips-nlu download-all-languages
-
 COPY . /src/
 
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
-ENTRYPOINT ["daphne", "-b", "0.0.0.0", "pytlas_server.asgi:application"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["daphne", "-b", "0.0.0.0", "pytlas_server.asgi:application"]
