@@ -34,7 +34,7 @@ class AssistantConsumer(WebsocketConsumer):
 
     self.send(text_data=json.dumps({
       'type': 'ready',
-      'lang': self.agent._interpreter.lang,
+      'language': self.user.profile.language,
     }))
 
   def on_answer(self, text, cards, **meta):
