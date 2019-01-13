@@ -50,6 +50,7 @@ class AssistantConsumer(WebsocketConsumer):
 
   def on_ask(self, slot, text, choices, **meta):
     meta.update({
+      'choices': choices,
       'slot': slot,
       'text': text,
     })
