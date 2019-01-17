@@ -19,4 +19,10 @@ def get_agent_for_user(user):
   else:
     logging.info('Agent found matching this user!')
 
+  user_settings = user.setting_set.all()
+  user_settings_dict = { setting.name: setting.value for setting in user_settings }
+
+  # Update agent meta with user settings
+  agent.meta.update(user_settings_dict)
+
   return agent
