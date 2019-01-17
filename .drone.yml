@@ -6,7 +6,7 @@ pipeline:
     secrets: [ssh_key]
     envs: [DRONE_COMMIT_SHA]
     script:
-      - echo $DRONE_COMMIT_SHA
       - cd /home/docker/pytlas-server
-      - git pull
+      - git fetch origin
+      - git checkout $DRONE_COMMIT_SHA
       - docker-compose up -d --build
