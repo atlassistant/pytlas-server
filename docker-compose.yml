@@ -4,7 +4,12 @@ services:
     restart: unless-stopped
     build: .
     environment:
-      - "DJANGO_DEBUG=''"
-      - "DJANGO_ALLOWED_HOST=atlas.voixdunet.com"
+      - "WEB_DEBUG=False"
+      - "WEB_ALLOWED_HOST=*"
+      - "WEB_SECRET=generateAStrongSecretKeyHere"
+      - "DATABASE_PATH=/data/db.sqlite"
+      - "PYTLAS_LANG=fr,en"
+      - "PYTLAS_SKILLS=/pytlas/skills"
+      - "PYTLAS_CACHE=/pytlas/cache"
     ports:
-      - 6005:8000
+      - 8000:8000
