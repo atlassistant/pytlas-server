@@ -1,4 +1,4 @@
-pytlas-server
+pytlas-server ![https://www.gnu.org/licenses/gpl-3.0](https://img.shields.io/badge/License-GPL%20v3-blue.svg)
 ===
 
 Pytlas server used to communicate with your assistant made with the Django framework.
