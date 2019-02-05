@@ -11,6 +11,7 @@ Pytlas server used to communicate with your assistant made with the Django frame
 $ git clone https://github.com/atlassistant/pytlas-server
 $ cd pytlas-server
 $ pip install -r requirements.txt
+$ chmod +x postinstall.sh entrypoint.sh
 $ ./postinstall.sh # To create super user and download needed resources (one time only)
 $ ./entrypoint.sh python manage.py runserver # Will run migrations
 ```
