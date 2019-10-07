@@ -1,6 +1,8 @@
 import logging
-from pytlas import Agent, settings
-from pytlas.interpreters.snips import SnipsInterpreter
+from pytlas import Agent
+from pytlas.cli import CACHE_DIR
+from pytlas.settings import CONFIG
+from pytlas.understanding.snips import SnipsInterpreter
 
 agents_by_user = {}
 
@@ -10,7 +12,7 @@ def get_agent_for_user(user):
   if not agent:
     logging.info('Agent does not exist for "%s", creating it' % user.id)
 
-    interpreter = SnipsInterpreter(user.profile.language[:2], settings.getpath(settings.SETTING_CACHE))
+    interpreter = SnipsInterpreter(user.profile.language[:2], CONFIG.getpath(CACHE_DIR))
     interpreter.fit_from_skill_data()
 
     agent = Agent(interpreter, uid=user.id)

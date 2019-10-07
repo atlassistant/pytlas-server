@@ -8,8 +8,6 @@ RUN apt-get update \
     && pip install -r requirements.txt \
     && apt-get purge -y --auto-remove gcc libc-dev
 
-RUN snips-nlu download-all-languages
-
 COPY . /src/
 
 RUN python manage.py collectstatic --noinput

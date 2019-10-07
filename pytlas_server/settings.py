@@ -12,24 +12,25 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from datetime import timedelta
-from pytlas.settings import config, get, getbool, SETTING_DEBUG
+from pytlas.cli import DEBUG
+from pytlas.settings import CONFIG
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Read the configuration file
-config.read(os.path.join(BASE_DIR, 'pytlas.conf'))
+CONFIG.load_from_file(os.path.join(BASE_DIR, 'pytlas.ini'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get('secret', section='web')
+SECRET_KEY = CONFIG.get('secret', section='web')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getbool(SETTING_DEBUG, section='web') # Must be set to an empty string to turn it off
+DEBUG = CONFIG.getbool(DEBUG, section='web') # Must be set to an empty string to turn it off
 
-ALLOWED_HOSTS = [get('allowed_host', '*', section='web')]
+ALLOWED_HOSTS = [CONFIG.get('allowed_host', '*', section='web')]
 
 CORS_ORIGIN_ALLOW_ALL = True # Since the API is exposed to anyone
 
@@ -100,7 +101,7 @@ WSGI_APPLICATION = 'pytlas_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': get('path', os.path.join(BASE_DIR, 'db.sqlite3'), section='database'),
+        'NAME': CONFIG.get('path', os.path.join(BASE_DIR, 'db.sqlite3'), section='database'),
     }
 }
 
